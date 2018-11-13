@@ -1,0 +1,29 @@
+---
+- name: ensure pihole ip address variable is defined
+  set_fact:
+    pihole_ip: "{{ ansible_default_ipv4.address }}"
+  when: pihole_ip is undefined
+
+- name: ensure docker container with pihole is up and running
+  docker_container:
+    name: "pihole"
+    image: "pihole/pihole:latest"
+    state: "started"
+    restart_policy: "unless-stopped"
+    capabilities:
+      - "NET_ADMIN"
+    ports:
+      - "{{ pihole_ip }}:53:53/tcp"
+      - "{{ pihole_ip }}:53:53/udp"
+      - "{{ pihole_ip }}:67:67/udp"
+      - "{{ pihole_ip }}:80:80/tcp"
+      - "{{ pihole_ip }}:443:443/tcp"
+    volumes:
+      - "/pihole/pihole:/etc/pihole:rw"
+      - "/pihole/dnsmasq.d:/etc/dnsmasq.d:rw"
+    dns_servers:
+      - 127.0.0.1
+    env:
+      ServerIP="{{ pihole_ip }}"
+      IPv6="{{ pihole_ipv6 }}"
+  become: true
