@@ -20,7 +20,8 @@
       - 127.0.0.1
     env:
       ServerIP="{{ pihole_ip }}"
-      IPv6="{{ pihole_ipv6 }}"
+      ServerIPv6="{{ pihole_ipv6 }}"
+      IPv6="{{ pihole_ipv6_support }}"
       WEBPASSWORD="{{ pihole_webpassword }}"
       TZ="{{ pihole_timezone }}"
   become: true
