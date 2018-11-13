@@ -27,12 +27,3 @@
       ServerIP="{{ pihole_ip }}"
       IPv6="{{ pihole_ipv6 }}"
   become: true
-
-- name: ensure pihole cron.d configuration is correct
-  cron:
-    name: "pihole_gravity_update"
-    cron_file: "pihole"
-    user: "root"
-    job: "docker exec pihole pihole updateGravity"
-    special_time: "daily"
-  become: true
