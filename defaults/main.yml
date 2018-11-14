@@ -1,6 +1,6 @@
 ---
 pihole_ip: ""
 pihole_ipv6: ""
-pihole_ipv6_support: false
+pihole_ipv6_support: False
 pihole_timezone: "UTC"
 pihole_webpassword: ""
