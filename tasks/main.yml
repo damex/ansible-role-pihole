@@ -2,7 +2,7 @@
 - name: ensure pihole ip address variable is defined
   set_fact:
     pihole_ip: "{{ ansible_default_ipv4.address }}"
-  when: pihole_ip is undefined
+  when: pihole_ip is undefined or pihole_ip == ""
 
 - name: ensure docker container with pihole is up and running
   docker_container:
