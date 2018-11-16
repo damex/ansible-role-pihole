@@ -15,7 +15,7 @@
 - name: ensure docker container with pihole is up and running
   docker_container:
     name: "pihole"
-    image: "pihole/pihole:latest"
+    image: "{{ pihole_image }}:{{ pihole_image_tag }}"
     state: "started"
     restart_policy: "unless-stopped"
     ports:
