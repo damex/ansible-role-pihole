@@ -21,9 +21,6 @@
     ports:
       - "{{ pihole_ip }}:53:53/udp"
       - "{{ pihole_ip }}:80:80/tcp"
-    volumes:
-      - "/pihole/pihole:/etc/pihole:rw"
-      - "/pihole/dnsmasq.d:/etc/dnsmasq.d:rw"
     dns_servers:
       - 127.0.0.1
     env:
