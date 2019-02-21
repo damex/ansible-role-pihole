@@ -6,3 +6,7 @@ pihole_ipv6: ""
 pihole_ipv6_support: False
 pihole_timezone: "UTC"
 pihole_webpassword: ""
+pihole_dnsmasq_user: "root"
+pihole_volumes:
+  - "/data/pihole:/etc/pihole"
+  - "/data/dnsmasq.d:/etc/dnsmasq.d"
