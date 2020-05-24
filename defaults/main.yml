@@ -1,7 +1,7 @@
 ---
 pihole_image: "pihole/pihole"
 pihole_image_tag: "latest"
-pihole_serverip: ""
+pihole_serverip: "{{ ansible_default_ipv4.address }}"
 pihole_serveripv6: ""
 pihole_ipv6: false
 pihole_tz: "UTC"

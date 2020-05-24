@@ -1,9 +1,8 @@
 ---
-- name: ensure pihole ipv4 address variable is defined
-  set_fact:
-    pihole_serverip: "{{ ansible_default_ipv4.address }}"
-  when:
-    - pihole_serverip is not defined or not pihole_ip
+- name: ensure network facts
+  setup:
+    gather_subset:
+      - network
 
 - name: ensure pihole ipv6 address variable is defined
   set_fact:
