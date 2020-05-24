@@ -1,0 +1,7 @@
+---
+- name: ensire pihole directories
+  file:
+    path: "{{ item.split(':')[0] }}"
+    state: "directory"
+  loop: "{{ pihole_volumes }}"
+  become: true
