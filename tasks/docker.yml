@@ -1,0 +1,21 @@
+---
+- name: ensure docker container
+  docker_container:
+    name: "pihole"
+    image: "{{ pihole_image }}:{{ pihole_image_tag }}"
+    state: "started"
+    restart_policy: "unless-stopped"
+    ports:
+      - "{{ pihole_ip }}:53:53/udp"
+      - "{{ pihole_ip }}:80:80/tcp"
+    dns_servers:
+      - 127.0.0.1
+    volumes: "{{ pihole_volumes }}"
+    env:
+      ServerIP="{{ pihole_serverip }}"
+      ServerIPv6="{{ pihole_serveripv6 }}"
+      IPv6="{{ pihole_ipv6 }}"
+      WEBPASSWORD="{{ pihole_webpassword }}"
+      DNSMASQ_USER="{{ pihole_dnsmasq_user }}"
+      TZ="{{ pihole_tz }}"
+  become: true

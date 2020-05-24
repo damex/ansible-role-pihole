@@ -1,41 +1,8 @@
 ---
-- name: ensure pihole ipv4 address variable is defined
-  set_fact:
-    pihole_ip: "{{ ansible_default_ipv4.address }}"
-  when:
-    - pihole_ip is undefined or pihole_ip == ""
-
-- name: ensure pihole ipv6 address variable is defined
-  set_fact:
-    pihole_ip: "{{ ansible_default_ipv6.address }}"
-  when:
-    - pihole_ipv6_support == "True"
-    - pihole_ipv6 is undefined or pihole_ipv6 == ""
-
-- name: ensire pihole directories are exist
-  file:
-    path: "{{ item.split(':')[0] }}"
-    state: "directory"
-  loop: "{{ pihole_volumes }}"
-  become: true
-
-- name: ensure docker container with pihole is up and running
-  docker_container:
-    name: "pihole"
-    image: "{{ pihole_image }}:{{ pihole_image_tag }}"
-    state: "started"
-    restart_policy: "unless-stopped"
-    ports:
-      - "{{ pihole_ip }}:53:53/udp"
-      - "{{ pihole_ip }}:80:80/tcp"
-    dns_servers:
-      - 127.0.0.1
-    volumes: "{{ pihole_volumes }}"
-    env:
-      ServerIP="{{ pihole_ip }}"
-      ServerIPv6="{{ pihole_ipv6 }}"
-      IPv6="{{ pihole_ipv6_support }}"
-      WEBPASSWORD="{{ pihole_webpassword }}"
-      DNSMASQ_USER="{{ pihole_dnsmasq_user }}"
-      TZ="{{ pihole_timezone }}"
-  become: true
+- name: ensure pihole
+  block:
+    - import_tasks: environment.yml
+    - import_tasks: directories.yml
+    - import_tasks: docker.yml
+  tags:
+    - pihole

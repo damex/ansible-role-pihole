@@ -1,12 +1,12 @@
 ---
 pihole_image: "pihole/pihole"
 pihole_image_tag: "latest"
-pihole_ip: ""
-pihole_ipv6: ""
-pihole_ipv6_support: False
-pihole_timezone: "UTC"
+pihole_serverip: ""
+pihole_serveripv6: ""
+pihole_ipv6: false
+pihole_tz: "UTC"
 pihole_webpassword: ""
 pihole_dnsmasq_user: "root"
 pihole_volumes:
-  - "/data/pihole:/etc/pihole"
-  - "/data/dnsmasq.d:/etc/dnsmasq.d"
+  - "/srv/pihole:/etc/pihole"
+  - "/srv/dnsmasq.d:/etc/dnsmasq.d"
