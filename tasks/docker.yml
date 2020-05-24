@@ -6,8 +6,8 @@
     state: "started"
     restart_policy: "unless-stopped"
     ports:
-      - "{{ pihole_ip }}:53:53/udp"
-      - "{{ pihole_ip }}:80:80/tcp"
+      - "{{ pihole_serverip }}:53:53/udp"
+      - "{{ pihole_serverip }}:80:80/tcp"
     dns_servers:
       - 127.0.0.1
     volumes: "{{ pihole_volumes }}"
