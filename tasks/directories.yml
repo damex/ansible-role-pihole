@@ -3,5 +3,8 @@
   file:
     path: "{{ item.split(':')[0] }}"
     state: "directory"
+    owner: "{{ pihole_user }}"
+    group: "{{ pihole_group }}"
+    mode: 0660
   loop: "{{ pihole_volumes }}"
   become: true

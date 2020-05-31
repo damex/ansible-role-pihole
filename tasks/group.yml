@@ -1,0 +1,6 @@
+---
+- name: ensure pihole group
+  group:
+    name: "{{ pihole_group }}"
+    state: "{{ pihole_group_state }}"
+  become: true
