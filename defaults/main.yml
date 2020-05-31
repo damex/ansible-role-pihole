@@ -1,4 +1,12 @@
 ---
+pihole_state: "present"
+pihole_user: "pihole"
+pihole_user_state: "{{ pihole_state }}"
+pihole_user_extra_groups: []
+pihole_home: "/var/lib/pihole"
+pihole_shell: "/sbin/nologin"
+pihole_group: "pihole"
+pihole_group_state: "{{ pihole_state }}"
 pihole_image: "pihole/pihole"
 pihole_image_tag: "latest"
 pihole_serverip: "{{ ansible_default_ipv4.address }}"
@@ -7,6 +15,17 @@ pihole_ipv6: false
 pihole_tz: "UTC"
 pihole_webpassword: ""
 pihole_dnsmasq_user: "root"
+pihole_timeout: 300
 pihole_volumes:
-  - "/srv/pihole:/etc/pihole"
-  - "/srv/dnsmasq.d:/etc/dnsmasq.d"
+  - "{{ pihole_home }}/pihole:/etc/pihole"
+  - "{{ pihole_home }}/dnsmasq.d:/etc/dnsmasq.d"
+pihole_dns_servers:
+  - 127.0.0.1
+  - 1.1.1.1
+pihole_web_port: 80
+pihole_virtual_host: "{{ pihole_serverip }}"
+pihole_capabilities: []
+pihole_conditional_forwarding: false
+pihole_conditional_forwarding_ip: ""
+pihole_conditional_forwarding_domain: ""
+pihole_conditional_forwarding_reverse: ""

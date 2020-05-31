@@ -1,21 +1,40 @@
 ---
+- name: ensure docker image is pulled
+  docker_image:
+    name: "{{ pihole_image }}:{{ pihole_image_tag }}"
+    source: "pull"
+  become: true
+
 - name: ensure docker container
   docker_container:
     name: "pihole"
     image: "{{ pihole_image }}:{{ pihole_image_tag }}"
-    state: "started"
+    state: "present"
+    network_mode: "host"
     restart_policy: "unless-stopped"
-    ports:
-      - "{{ pihole_serverip }}:53:53/udp"
-      - "{{ pihole_serverip }}:80:80/tcp"
-    dns_servers:
-      - 127.0.0.1
+    dns_servers: "{{ pihole_dns_servers }}"
     volumes: "{{ pihole_volumes }}"
     env:
-      ServerIP="{{ pihole_serverip }}"
-      ServerIPv6="{{ pihole_serveripv6 }}"
-      IPv6="{{ pihole_ipv6 }}"
-      WEBPASSWORD="{{ pihole_webpassword }}"
-      DNSMASQ_USER="{{ pihole_dnsmasq_user }}"
-      TZ="{{ pihole_tz }}"
+      ServerIP: "{{ pihole_serverip }}"
+      ServerIPv6: "{{ pihole_serveripv6 }}"
+      IPv6: "{{ pihole_ipv6 | string }}"
+      VIRTUAL_HOST: "{{ pihole_virtual_host }}"
+      WEBPASSWORD: "{{ pihole_webpassword }}"
+      WEB_PORT: "{{ pihole_web_port | string }}"
+      DNSMASQ_USER: "{{ pihole_dnsmasq_user }}"
+      TZ: "{{ pihole_tz }}"
+      CONDITIONAL_FORWARDING: "{{ pihole_conditional_forwarding | string }}"
+      CONDITIONAL_FORWARDING_IP: "{{ pihole_conditional_forwarding_ip }}"
+      CONDITIONAL_FORWARDING_DOMAIN: "{{ pihole_conditional_forwarding_domain }}"
+      CONDITIONAL_FORWARDING_REVERSE: "{{ pihole_conditional_forwarding_reverse }}"
+    timeout: "{{ pihole_timeout }}"
+    capabilities: "{{ pihole_capabilities }}"
+  become: true
+
+- name: ensure docker container is started
+  docker_container:
+    name: "pihole"
+    comparisons:
+      '*': "ignore"
+    state: "started"
   become: true

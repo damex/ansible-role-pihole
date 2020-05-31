@@ -1,0 +1,10 @@
+---
+- name: ensure pihole user
+  user:
+    name: "{{ pihole_user }}"
+    state: "{{ pihole_user_state }}"
+    group: "{{ pihole_group }}"
+    groups: "{{ pihole_user_extra_groups | join(', ') }}"
+    home: "{{ pihole_home }}"
+    shell: "{{ pihole_shell }}"
+  become: true
